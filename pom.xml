@@ -14,11 +14,12 @@
     <packaging>pom</packaging>
 
     <properties>
-        <appName>jetty-in-webapp</appName>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.7</java.version>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
         <spring.version>4.1.6.RELEASE</spring.version>
         <jetty.version>9.2.10.v20150310</jetty.version>
+        <jersey.version>2.7</jersey.version>
     </properties>
 
     <dependencies>
@@ -38,6 +39,27 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
             <version>${jetty.version}</version>
+        </dependency>
+        <!-- jersey -->
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet-core</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-jetty-http</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-moxy</artifactId>
+            <version>${jersey.version}</version>
         </dependency>
         <!--spring dependencies-->
         <dependency>
@@ -78,8 +100,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.7.0</version>
                     <configuration>
-                        <target>${java.version}</target>
-                        <source>${java.version}</source>
+                        <target>${maven.compiler.target}</target>
+                        <source>${maven.compiler.source}</source>
                         <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                 </plugin>

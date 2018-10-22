@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 public class HelloHandler extends AbstractHandler {
     final String greeting;
     final String body;
+    int pos = 0;
 
     public HelloHandler() {
         this("Hello World");
@@ -36,11 +37,12 @@ public class HelloHandler extends AbstractHandler {
 
         PrintWriter out = response.getWriter();
 
-        out.println("<h1>" + greeting + "</h1>");
+        out.println("<h1>" + greeting + pos + "</h1>");
         if (body != null) {
             out.println(body);
         }
 
         baseRequest.setHandled(true);
+        pos++;
     }
 }
