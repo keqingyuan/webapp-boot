@@ -10,6 +10,7 @@
     <modules>
         <module>jetty-in-jar</module>
         <module>jetty-in-war</module>
+        <module>i18n</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -19,7 +20,7 @@
         <maven.compiler.target>1.7</maven.compiler.target>
         <spring.version>4.1.6.RELEASE</spring.version>
         <jetty.version>9.2.10.v20150310</jetty.version>
-        <jersey.version>2.7</jersey.version>
+        <jersey.version>2.27</jersey.version>
     </properties>
 
     <dependencies>
@@ -33,6 +34,11 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
             <version>${jetty.version}</version>
         </dependency>
         <dependency>
@@ -58,7 +64,12 @@
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-moxy</artifactId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.inject</groupId>
+            <artifactId>jersey-hk2</artifactId>
             <version>${jersey.version}</version>
         </dependency>
         <!--spring dependencies-->
