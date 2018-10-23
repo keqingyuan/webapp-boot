@@ -31,6 +31,15 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/environment/${environment.package}</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
@@ -74,44 +83,82 @@
                 </executions>
             </plugin>
             <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-shade-plugin</artifactId>-->
-                <!--<version>2.4.1</version>-->
-                <!--<configuration>-->
-                    <!--<createDependencyReducedPom>true</createDependencyReducedPom>-->
-                    <!--<filters>-->
-                        <!--<filter>-->
-                            <!--<artifact>*:*</artifact>-->
-                            <!--<excludes>-->
-                                <!--<exclude>META-INF/*.SF</exclude>-->
-                                <!--<exclude>META-INF/*.DSA</exclude>-->
-                                <!--<exclude>META-INF/*.RSA</exclude>-->
-                            <!--</excludes>-->
-                        <!--</filter>-->
-                    <!--</filters>-->
-                <!--</configuration>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-shade-plugin</artifactId>-->
+            <!--<version>2.4.1</version>-->
+            <!--<configuration>-->
+            <!--<createDependencyReducedPom>true</createDependencyReducedPom>-->
+            <!--<filters>-->
+            <!--<filter>-->
+            <!--<artifact>*:*</artifact>-->
+            <!--<excludes>-->
+            <!--<exclude>META-INF/*.SF</exclude>-->
+            <!--<exclude>META-INF/*.DSA</exclude>-->
+            <!--<exclude>META-INF/*.RSA</exclude>-->
+            <!--</excludes>-->
+            <!--</filter>-->
+            <!--</filters>-->
+            <!--</configuration>-->
 
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>shade</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<transformers>-->
-                                <!--<transformer-->
-                                        <!--implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />-->
-                                <!--<transformer-->
-                                        <!--implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
-                                    <!--<manifestEntries>-->
-                                        <!--<Main-Class>com.rest.test.App</Main-Class>-->
-                                    <!--</manifestEntries>-->
-                                <!--</transformer>-->
-                            <!--</transformers>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<phase>package</phase>-->
+            <!--<goals>-->
+            <!--<goal>shade</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+            <!--<transformers>-->
+            <!--<transformer-->
+            <!--implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />-->
+            <!--<transformer-->
+            <!--implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+            <!--<manifestEntries>-->
+            <!--<Main-Class>com.rest.test.App</Main-Class>-->
+            <!--</manifestEntries>-->
+            <!--</transformer>-->
+            <!--</transformers>-->
+            <!--</configuration>-->
+            <!--</execution>-->
+            <!--</executions>-->
             <!--</plugin>-->
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <environment.package>dev</environment.package>
+                <maven.app-name>${name}</maven.app-name>
+                <maven.log-home>${project.build.directory}/../tesla-log</maven.log-home>
+                <maven.log-level>INFO</maven.log-level>
+                <maven.sql-log-level>DEBUG</maven.sql-log-level>
+                <maven.console-log-enable>true</maven.console-log-enable>
+            </properties>
+        </profile>
+        <profile>
+            <id>uat</id>
+            <properties>
+                <environment.package>uat</environment.package>
+                <maven.app-name>${name}</maven.app-name>
+                <maven.log-home></maven.log-home>
+                <maven.log-level>INFO</maven.log-level>
+                <maven.sql-log-level>INFO</maven.sql-log-level>
+                <maven.console-log-enable>false</maven.console-log-enable>
+            </properties>
+        </profile>
+        <profile>
+            <id>prd</id>
+            <properties>
+                <environment.package>prd</environment.package>
+                <maven.app-name>${name}</maven.app-name>
+                <maven.log-home></maven.log-home>
+                <maven.log-level>INFO</maven.log-level>
+                <maven.sql-log-level>INFO</maven.sql-log-level>
+                <maven.console-log-enable>false</maven.console-log-enable>
+            </properties>
+        </profile>
+    </profiles>
 </project>
