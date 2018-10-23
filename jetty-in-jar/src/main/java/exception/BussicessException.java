@@ -5,6 +5,8 @@ package exception;
  */
 public class BussicessException extends RuntimeException {
 
+    private static final long serialVersionUID = -8627838232253690816L;
+
     public BussicessException(String code) {
         super(code);
     }
