@@ -6,6 +6,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.springframework.web.context.ContextLoaderListener;
 
 /**
  * Created by qingyuan on 2018/10/19.
@@ -13,6 +14,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 public class Launcher {
 
     private void start(int port, String... context) {
+
         // 创建指定监听端口的jetty服务器
         Server server = new Server();
         // 配置connector
@@ -29,11 +31,13 @@ public class Launcher {
             server.dumpStdErr();
             // 准备完毕启动服务器
             server.join();
+
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(-1);
+
         } finally {
             server.destroy();
+            System.exit(-1);
         }
     }
 
@@ -42,12 +46,16 @@ public class Launcher {
         ServletContextHandler servletContext = new ServletContextHandler(ServletContextHandler.SESSIONS);
         servletContext.setContextPath(context);
 
+        // add spring contextLoaderListener
+        servletContext.addEventListener(new ContextLoaderListener());
+        servletContext.setInitParameter("contextConfigLocation", "classpath*:**/context.xml");
+
         // jetty server
         Server server = new Server(port);
         server.setHandler(servletContext);
 
         // jersey
-        ServletHolder jerseyServlet = servletContext.addServlet( org.glassfish.jersey.servlet.ServletContainer.class, "/api/*");
+        ServletHolder jerseyServlet = servletContext.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/api/*");
         jerseyServlet.setInitOrder(0);
 
         // Tells the Jersey Servlet which REST service/class to load.
@@ -58,15 +66,15 @@ public class Launcher {
         try {
             // 启动
             server.start();
-            // 输出错误日志
-            server.dumpStdErr();
             // 准备完毕启动服务器
             server.join();
+
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(-1);
+
         } finally {
             server.destroy();
+            System.exit(-1);
         }
 
 
