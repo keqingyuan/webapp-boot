@@ -1,4 +1,4 @@
-package exception;
+package com.axis.onion.exception;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;

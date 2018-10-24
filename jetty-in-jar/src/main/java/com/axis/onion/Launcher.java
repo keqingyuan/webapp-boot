@@ -31,6 +31,7 @@ public class Launcher {
             server.join();
         } catch (Exception e) {
             e.printStackTrace();
+            System.exit(-1);
         } finally {
             server.destroy();
         }
@@ -46,23 +47,24 @@ public class Launcher {
         server.setHandler(servletContext);
 
         // jersey
-        ServletHolder jerseyServlet = servletContext.addServlet(
-                org.glassfish.jersey.servlet.ServletContainer.class, "/api/*");
+        ServletHolder jerseyServlet = servletContext.addServlet( org.glassfish.jersey.servlet.ServletContainer.class, "/api/*");
         jerseyServlet.setInitOrder(0);
 
         // Tells the Jersey Servlet which REST service/class to load.
-        jerseyServlet.setInitParameter("jersey.config.server.provider.packages",
-                "com.axis.onion.rest");
-//        jerseyServlet.setInitParameter("com.sun.jersey.config.property.resourceConfigClass",
-//                "com.sun.jersey.api.core.PackagesResourceConfig");
-//        jerseyServlet.setInitParameter("com.sun.jersey.api.json.POJOMappingFeature",
-//                "true"); // 自动将对象映射成json返回
+        jerseyServlet.setInitParameter("com.sun.jersey.config.property.resourceConfigClass", "com.sun.jersey.api.core.PackagesResourceConfig");
+        jerseyServlet.setInitParameter("jersey.config.server.provider.packages", "com.axis.onion");
+        jerseyServlet.setInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true"); // 自动将对象映射成json返回
 
         try {
+            // 启动
             server.start();
+            // 输出错误日志
+            server.dumpStdErr();
+            // 准备完毕启动服务器
             server.join();
         } catch (Exception e) {
             e.printStackTrace();
+            System.exit(-1);
         } finally {
             server.destroy();
         }

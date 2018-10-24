@@ -1,4 +1,4 @@
-package exception;
+package com.axis.onion.exception;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 
