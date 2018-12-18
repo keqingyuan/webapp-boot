@@ -1,7 +1,5 @@
 package com.axis.onion.exception;
 
-import javax.ws.rs.ext.Provider;
-
 /**
  * Created by qingyuan on 2018/10/23.
  */
