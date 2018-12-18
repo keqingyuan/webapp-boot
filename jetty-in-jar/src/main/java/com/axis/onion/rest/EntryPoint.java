@@ -6,6 +6,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by qingyuan on 2018/10/22.
@@ -16,8 +18,10 @@ public class EntryPoint {
     @GET
     @Path("/test")
     @Produces(MediaType.APPLICATION_JSON)
-    public String test() {
-        throw new BusinessException("nihao");
-        //return "Test";
+    public Map<String, Object> test() {
+        //throw new BusinessException("nihao");
+        Map<String, Object> result = new HashMap<>();
+        result.put("msg", "test");
+        return result;
     }
 }
