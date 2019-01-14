@@ -1,7 +1,5 @@
 package com.axis.onion.rest;
 
-import com.axis.onion.exception.BusinessException;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -19,7 +17,6 @@ public class EntryPoint {
     @Path("/test")
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, Object> test() {
-        //throw new BusinessException("nihao");
         Map<String, Object> result = new HashMap<>();
         result.put("msg", "test");
         return result;
