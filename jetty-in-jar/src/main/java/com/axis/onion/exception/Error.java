@@ -8,37 +8,27 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonRootName(value = "error")
 public class Error {
 
-    private int statusCode;
-    private String statusDescription;
-    private String errorMessage;
+    private String code;
+    private String msg;
 
-    public Error(int statusCode, String statusDescription, String errorMessage) {
-        this.statusCode = statusCode;
-        this.statusDescription = statusDescription;
-        this.errorMessage = errorMessage;
+    public Error(String code, String msg) {
+        this.code = code;
+        this.msg = msg;
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getStatusDescription() {
-        return statusDescription;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setStatusDescription(String statusDescription) {
-        this.statusDescription = statusDescription;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

@@ -1,3 +1,5 @@
+package com.axis.onion;
+
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -31,7 +33,7 @@ public class i18nBundle {
      * @param placeholder
      * @return
      */
-    public static String getMessage(String key, String... placeholder) {
+    public static String getMessage(String key, Object... placeholder) {
         String msg = bundle.getString(key);
         if (null != placeholder && placeholder.length > 0)
             return MessageFormat.format(msg, placeholder);

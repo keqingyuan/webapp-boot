@@ -102,9 +102,16 @@
                 <artifactId>jersey-server</artifactId>
                 <version>${jersey.version}</version>
             </dependency>
+            <!-- 适用于servlet2.5-->
+            <!--<dependency>-->
+                <!--<groupId>org.glassfish.jersey.containers</groupId>-->
+                <!--<artifactId>jersey-container-servlet-core</artifactId>-->
+                <!--<version>${jersey.version}</version>-->
+            <!--</dependency>-->
+            <!-- jersey-container-servlet是上面注释掉的替代方案(适用于servlet3.0) -->
             <dependency>
                 <groupId>org.glassfish.jersey.containers</groupId>
-                <artifactId>jersey-container-servlet-core</artifactId>
+                <artifactId>jersey-container-servlet</artifactId>
                 <version>${jersey.version}</version>
             </dependency>
             <dependency>
@@ -115,12 +122,6 @@
             <dependency>
                 <groupId>org.glassfish.jersey.inject</groupId>
                 <artifactId>jersey-hk2</artifactId>
-                <version>${jersey.version}</version>
-            </dependency>
-            <!-- jersey-container-servlet是上面注释掉的替代方案 -->
-            <dependency>
-                <groupId>org.glassfish.jersey.containers</groupId>
-                <artifactId>jersey-container-servlet</artifactId>
                 <version>${jersey.version}</version>
             </dependency>
             <!-- jersey+json -->
