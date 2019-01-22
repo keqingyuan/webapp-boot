@@ -56,7 +56,7 @@ public class Launcher {
 
         // add jersey servlet
         ServletHolder jerseyServlet = servletContext.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/api/*");
-        jerseyServlet.setInitOrder(0);
+        jerseyServlet.setInitOrder(1);
 
         // Tells the Jersey Servlet which REST service/class to load.
         jerseyServlet.setInitParameter("com.sun.jersey.config.property.resourceConfigClass","com.sun.jersey.api.core.PackagesResourceConfig");
@@ -64,6 +64,7 @@ public class Launcher {
         jerseyServlet.setInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
         // jersey resources package
         jerseyServlet.setInitParameter("jersey.config.server.provider.packages", "com.axis.onion");
+
 
         try {
             // 启动
