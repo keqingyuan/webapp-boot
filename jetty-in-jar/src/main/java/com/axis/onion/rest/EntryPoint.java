@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by qingyuan on 2018/10/22.
  */
-    @Path("/entry-point")
+@Path("/entry-point")
 public class EntryPoint {
 
     @GET

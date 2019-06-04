@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration>
 
-<configuration debug="false">
+<configuration debug="true">
     <!-- 上下文名称:应用名称_实例号 , 用于一个虚拟机部署两个tesla应用时区分应用,同时logback的jmx目录就是以contextName命名 -->
     <contextName>${maven.app-name}</contextName>
 
@@ -13,97 +13,14 @@
 
     <!-- 控制台日志 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
+        <encoder>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
             <pattern><![CDATA[
 				%n%-4r %d{yyyy-MM-dd HH:mm:ss.SSS} %thread %X{productionMode} %X{method} %X{requestURIWithQueryString} [f=%X{functionId}, tid=%X{transactionId}, ip=%X{remoteAddr}, sid=%X{cookie.JSESSIONID}]%n %-5level %logger{35} - %m%n
             ]]></pattern>
-        </layout>
+            <charset>UTF-8</charset>
+        </encoder>
     </appender>
-
-    <!-- 根据functionGroup及渠道来拆封日志 方式一(用discriminator实现只能用同样的pattern):
-        1. 如果 有functionGroupId则将日志打到${logHome}/%d{yyyy-MM-dd}/${functionGroupDir}/${functionGroupId}_%d{yyyy-MM-dd}.%i.log
-        2. 如果有channelId则将日志打到 ${logHome}/%d{yyyy-MM-dd}/${channelDir}/${channelId}_%d{yyyy-MM-dd}.%i.log
-        3. 如果有两者都没有则将日志打到 ${logHome}/%d{yyyy-MM-dd}/${defaultValue}_%d{yyyy-MM-dd}.%i.log -->
-    <!--
-    <appender name="SIFT_FUNCTION_GROUP_OR_CHANNEL" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator
-                class="com.tesla.framework.logext.FunctionGroupAndChannelDiscriminator">
-            <key>functionGroupOrChannelPath</key>
-            <defaultValue>application</defaultValue>
-            <functionGroupDir>function-group</functionGroupDir>
-            <channelDir>channel</channelDir>
-        </discriminator>
-        <sift>
-            <appender name="SIFT_${functionGroupOrChannelPath}"
-                      class="ch.qos.logback.core.rolling.RollingFileAppender">
-                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>${logHome}/%d{yyyy-MM-dd}/${functionGroupOrChannelPath}_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-                    <timeBasedFileNamingAndTriggeringPolicy
-                            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                        <maxFileSize>5MB</maxFileSize>
-                    </timeBasedFileNamingAndTriggeringPolicy>
-                </rollingPolicy>
-                <encoder>
-                    <Pattern>%n%-4r %d{yyyy-MM-dd HH:mm:ss.SSS} %thread %X{productionMode} %X{method} %X{requestURIWithQueryString} [f=%X{functionId}, tid=%X{transactionId}, ip=%X{remoteAddr}, sid=%X{cookie.JSESSIONID}]%n %-5level %logger{35} - %m%n</Pattern>
-                </encoder>
-            </appender>
-        </sift>
-    </appender>
-    -->
-
-
-    <!-- 根据functionGroup及渠道来拆封日志 方式二 (用过滤器实现，可以用不同的pattern):
-        1. 如果 有functionGroupId则将日志打到${logHome}/%d{yyyy-MM-dd}/${functionGroupDir}/${functionGroupId}_%d{yyyy-MM-dd}.%i.log
-        2. 如果有channelId则将日志打到 ${logHome}/%d{yyyy-MM-dd}/${channelDir}/${channelId}_%d{yyyy-MM-dd}.%i.log
-        3. 如果有两者都没有则将日志打到 ${logHome}/%d{yyyy-MM-dd}/${defaultValue}_%d{yyyy-MM-dd}.%i.log -->
-    <!--
-    <appender name="SIFT_FUNCTION_GROUP" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <filter class="com.tesla.framework.logext.FunctionGroupLogFilter" />
-        <discriminator>
-            <key>functionGroupId</key>
-            <defaultValue>../application</defaultValue>
-        </discriminator>
-        <sift>
-            <appender name="SIFT_${functionGroupId}"
-                class="ch.qos.logback.core.rolling.RollingFileAppender">
-                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>${logHome}/%d{yyyy-MM-dd}/function-group/${functionGroupId}_%d{yyyy-MM-dd}.%i.log
-                    </fileNamePattern>
-                    <timeBasedFileNamingAndTriggeringPolicy
-                        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                        <maxFileSize>5MB</maxFileSize>
-                    </timeBasedFileNamingAndTriggeringPolicy>
-                </rollingPolicy>
-                <encoder>
-                    <Pattern>%n%-4r %d{yyyy-MM-dd HH:mm:ss.SSS} %thread %X{productionMode} [f=%X{functionId}, tid=%X{transactionId}, ip=%X{remoteAddr}, sid=%X{cookie.JSESSIONID}] %-5level %logger{35} - %m%n</Pattern>
-                </encoder>
-            </appender>
-        </sift>
-    </appender>
-    <appender name="SIFT_CHANNEL" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <filter class="com.tesla.framework.logext.ChannelLogFilter" />
-        <discriminator>
-            <key>channelId</key>
-            <defaultValue>../application</defaultValue>
-        </discriminator>
-        <sift>
-            <appender name="SIFT_${channelId}"
-                class="ch.qos.logback.core.rolling.RollingFileAppender">
-                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                    <fileNamePattern>${logHome}/%d{yyyy-MM-dd}/channel/${channelId}_%d{yyyy-MM-dd}.%i.log
-                    </fileNamePattern>
-                    <timeBasedFileNamingAndTriggeringPolicy
-                        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                        <maxFileSize>5MB</maxFileSize>
-                    </timeBasedFileNamingAndTriggeringPolicy>
-                </rollingPolicy>
-                <encoder>
-                    <Pattern>%n%-4r %d{yyyy-MM-dd HH:mm:ss.SSS} %thread %X{productionMode} %X{method} %X{requestURIWithQueryString} [ip=%X{remoteAddr}, sid=%X{cookie.JSESSIONID}]%n %-5level %logger{35} - %m%n</Pattern>
-                </encoder>
-            </appender>
-        </sift>
-    </appender>
-     -->
 
     <!-- 错误及警告日志 -->
     <appender name="ERROR_WARN"
@@ -174,14 +91,6 @@
     <root level="${maven.log-level}">
         <!-- 注意: 请在上生产或性能测试前将CONSOLE appender-ref注释掉 -->
         <appender-ref ref="CONSOLE"/>
-
-        <!-- 根据functionGroup及渠道来拆封日志 方式一 时配置下面这个appender-ref -->
-        <!--<appender-ref ref="SIFT_FUNCTION_GROUP_OR_CHANNEL"/>-->
-
-        <!-- 根据functionGroup及渠道来拆封日志 方式二 时配置下面两个appender-ref -->
-        <!--<appender-ref ref="SIFT_FUNCTION_GROUP"/>-->
-        <!--<appender-ref ref="SIFT_CHANNEL"/>-->
-
         <appender-ref ref="ERROR_WARN"/>
     </root>
 </configuration>

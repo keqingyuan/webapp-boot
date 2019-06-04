@@ -48,7 +48,7 @@ public class Launcher {
 
         // add spring contextLoaderListener
         servletContext.addEventListener(new ContextLoaderListener());
-        servletContext.setInitParameter("contextConfigLocation", "classpath*:**/context.xml");
+        servletContext.setInitParameter("contextConfigLocation", "classpath*:**/application-context.xml");
 
         // jetty server
         Server server = new Server(port);
@@ -85,7 +85,7 @@ public class Launcher {
 
     public static void main(String[] args) {
 
-        new Launcher().startWithServletContext(8080, "/");
+        new Launcher().startWithServletContext(8090, "/");
 
     }
 }

@@ -17,8 +17,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -46,6 +46,11 @@
             <groupId>com.axis.onion</groupId>
             <artifactId>i18n</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>cc.kebei</groupId>
+            <artifactId>onion-expands-shell</artifactId>
+            <version>3.0.0</version>
         </dependency>
     </dependencies>
 
@@ -128,7 +133,7 @@
             <properties>
                 <environment.package>dev</environment.package>
                 <maven.app-name>${name}</maven.app-name>
-                <maven.log-home>${project.build.directory}/../tesla-log</maven.log-home>
+                <maven.log-home>${project.build.directory}/../log</maven.log-home>
                 <maven.log-level>INFO</maven.log-level>
                 <maven.sql-log-level>DEBUG</maven.sql-log-level>
                 <maven.console-log-enable>true</maven.console-log-enable>
@@ -150,7 +155,7 @@
             <properties>
                 <environment.package>prd</environment.package>
                 <maven.app-name>${name}</maven.app-name>
-                <maven.log-home></maven.log-home>
+                <maven.log-home>./log</maven.log-home>
                 <maven.log-level>INFO</maven.log-level>
                 <maven.sql-log-level>INFO</maven.sql-log-level>
                 <maven.console-log-enable>false</maven.console-log-enable>
