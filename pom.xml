@@ -12,6 +12,9 @@
     </modules>
     <packaging>pom</packaging>
 
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>common utils</description>
+    <url>https://github.com/keqingyuan/webapp-boot</url>
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
@@ -35,7 +38,7 @@
         <url>https://github.com/keqingyuan/webapp-boot</url>
         <connection>scm:git:https://github.com/keqingyuan/webapp-boot.git</connection>
         <developerConnection>scm:git:https://github.com/keqingyuan/webapp-boot.git</developerConnection>
-      <tag>HEAD</tag>
+        <tag>HEAD</tag>
   </scm>
 
     <properties>
