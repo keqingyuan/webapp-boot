@@ -16,9 +16,9 @@ public class HTPasswdService {
 
     private static final Logger LOG = LoggerFactory.getLogger(HTPasswdService.class);
 
-    private final String UPDATE_COMMAND_TEST = "/usr/bin/htpasswd2 -mb /svn_test/conf/passwd.conf";
+    private final String UPDATE_COMMAND_TEST = "/usr/bin/htpasswd2 -mb /home/svnuser/svn_apache_common_conf/passwd_test.conf";
 
-    private final String UPDATE_COMMAND = "/usr/bin/htpasswd2 -mb /apache/svn_common_conf/passwd.conf";
+    private final String UPDATE_COMMAND = "/usr/bin/htpasswd2 -mb /apache/svn_common_conf_116/passwd.comf";
 
     public String updatePassword(String name, String passwd, String env) {
         LOG.info("name={},password={}", name, passwd);

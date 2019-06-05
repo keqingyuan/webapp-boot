@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.axis.onion</groupId>
-    <artifactId>jetty-in-webapp</artifactId>
+    <groupId>cc.kebei</groupId>
+    <artifactId>webapp-boot</artifactId>
     <version>1.0</version>
     <modules>
-        <module>jetty-in-jar</module>
-        <module>jetty-in-war</module>
+        <module>boot-in-jar</module>
+        <module>boot-in-war</module>
         <module>i18n</module>
     </modules>
     <packaging>pom</packaging>
@@ -274,4 +274,16 @@
         </pluginManagement>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>ossrh</id>
+            <name>Sonatype Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <name>Sonatype Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

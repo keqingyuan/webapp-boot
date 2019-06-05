@@ -3,13 +3,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>jetty-in-webapp</artifactId>
-        <groupId>com.axis.onion</groupId>
+        <artifactId>webapp-boot</artifactId>
+        <groupId>cc.kebei</groupId>
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jetty-in-jar</artifactId>
+    <artifactId>boot-in-jar</artifactId>
 
     <name>jetty-in-jar</name>
     <!-- FIXME change it to the project's website -->
@@ -43,7 +43,7 @@
             <artifactId>jersey-spring4</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.axis.onion</groupId>
+            <groupId>cc.kebei</groupId>
             <artifactId>i18n</artifactId>
             <version>1.0</version>
         </dependency>
@@ -85,71 +85,50 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
+                <artifactId>maven-shade-plugin</artifactId>
                 <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>com.axis.onion.Launcher</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
                 </configuration>
                 <executions>
                     <execution>
-                        <id>make-assembly</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>shade</goal>
                         </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Main-Class>com.axis.onion.Launcher</Main-Class>
+                                    </manifestEntries>
+                                </transformer>
+                                <!--  解决spring 项目的xml 文件找不到问题 -->
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.handlers</resource>
+                                </transformer>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.schemas</resource>
+                                </transformer>
+                            </transformers>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-shade-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <createDependencyReducedPom>false</createDependencyReducedPom>-->
-<!--                    <filters>-->
-<!--                        <filter>-->
-<!--                            <artifact>*:*</artifact>-->
-<!--                            <excludes>-->
-<!--                                <exclude>META-INF/*.SF</exclude>-->
-<!--                                <exclude>META-INF/*.DSA</exclude>-->
-<!--                                <exclude>META-INF/*.RSA</exclude>-->
-<!--                            </excludes>-->
-<!--                        </filter>-->
-<!--                    </filters>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>shade</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <transformers>-->
-<!--                                <transformer-->
-<!--                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>-->
-<!--                                <transformer-->
-<!--                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
-<!--                                    <manifestEntries>-->
-<!--                                        <Main-Class>com.axis.onion.Launcher</Main-Class>-->
-<!--                                    </manifestEntries>-->
-<!--                                </transformer>-->
-<!--                                &lt;!&ndash;  解决spring 项目的xml 文件找不到问题 &ndash;&gt;-->
-<!--                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
-<!--                                    <resource>META-INF/spring.handlers</resource>-->
-<!--                                </transformer>-->
-<!--                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
-<!--                                    <resource>META-INF/spring.schemas</resource>-->
-<!--                                </transformer>-->
-<!--                            </transformers>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
         </plugins>
     </build>
     <profiles>

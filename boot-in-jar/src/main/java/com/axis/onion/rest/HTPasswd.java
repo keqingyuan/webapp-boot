@@ -20,7 +20,7 @@ import java.util.Map;
  * Created by qingyuan on 2018/10/22.
  */
 @Path("/htpasswd")
-@IPFilterConfigure({"localhost"})
+//@IPFilterConfigure({"localhost"})
 public class HTPasswd {
 
     @Autowired

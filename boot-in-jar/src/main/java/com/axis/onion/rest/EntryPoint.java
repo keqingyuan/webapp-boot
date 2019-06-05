@@ -19,9 +19,6 @@ public class EntryPoint {
     @Path("/test")
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, Object> test() {
-        throw new BusinessException("00001","qingyuan");
-//        Map<String, Object> result = new HashMap<>();
-//        result.put("msg", "test");
-//        return result;
+        throw new BusinessException("007","Qingyuan");
     }
 }
