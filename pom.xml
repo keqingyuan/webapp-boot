@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>common utils</description>
+    <description>webapp-boot</description>
     <url>https://github.com/keqingyuan/webapp-boot</url>
     <licenses>
         <license>

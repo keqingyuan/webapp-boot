@@ -10,9 +10,9 @@
 
     <artifactId>boot-in-jar</artifactId>
 
-    <name>jetty-in-jar</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>boot-in-jar</description>
+    <url>https://github.com/keqingyuan/webapp-boot</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
