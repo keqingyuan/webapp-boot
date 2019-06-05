@@ -1,5 +1,7 @@
 package com.axis.onion.exception;
 
+import javax.ws.rs.core.Response;
+
 /**
  * Created by qingyuan on 2018/10/23.
  */
@@ -11,11 +13,23 @@ public class BusinessException extends RuntimeException {
 
     private Object[] args;
 
+    private Response.Status status = Response.Status.BAD_REQUEST;
+
     public BusinessException(String code) {
         this.code = code;
     }
 
+    public BusinessException(Response.Status status) {
+        this.status = status;
+    }
+
     public BusinessException(String code, Object... args) {
+        this.code = code;
+        this.args = args;
+    }
+
+    public BusinessException(Response.Status status, String code, Object... args) {
+        this.status = status;
         this.code = code;
         this.args = args;
     }
@@ -35,5 +49,9 @@ public class BusinessException extends RuntimeException {
 
     public String getCode() {
         return code;
+    }
+
+    public Response.Status getStatus() {
+        return status;
     }
 }

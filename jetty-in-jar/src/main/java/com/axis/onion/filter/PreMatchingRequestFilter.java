@@ -8,7 +8,7 @@ import java.io.IOException;
 
 @Provider
 @PreMatching
-public class PrematchingRequestFilter implements ContainerRequestFilter {
+public class PreMatchingRequestFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext ctx) throws IOException {

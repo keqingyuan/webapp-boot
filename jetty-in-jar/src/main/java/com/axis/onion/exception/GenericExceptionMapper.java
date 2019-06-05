@@ -13,8 +13,12 @@ public class GenericExceptionMapper implements ExceptionMapper<com.axis.onion.ex
 
     @Override
     public Response toResponse(BusinessException ex) {
+        Response.Status status = ex.getStatus();
+        if (status == null) {
+            status = Response.Status.BAD_REQUEST;
+        }
 
-        return Response.status(Response.Status.BAD_REQUEST)
+        return Response.status(status)
                 .entity(new Error(ex.getCode(), ex.getMessage()))
                 .type(MediaType.APPLICATION_JSON)
                 .build();
