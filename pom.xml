@@ -6,7 +6,7 @@
 
     <groupId>cc.kebei</groupId>
     <artifactId>webapp-boot</artifactId>
-    <version>1.0</version>
+    <version>1.0-SNAPSHOT</version>
     <modules>
         <module>boot-in-jar</module>
         <module>boot-in-war</module>
