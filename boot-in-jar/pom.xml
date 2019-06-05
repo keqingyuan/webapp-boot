@@ -134,7 +134,7 @@
             </activation>
             <properties>
                 <environment.package>dev</environment.package>
-                <maven.app-name>${name}</maven.app-name>
+                <maven.app-name>${project.name}</maven.app-name>
                 <maven.log-home>${project.build.directory}/../log</maven.log-home>
                 <maven.log-level>INFO</maven.log-level>
                 <maven.sql-log-level>DEBUG</maven.sql-log-level>
@@ -145,7 +145,7 @@
             <id>uat</id>
             <properties>
                 <environment.package>uat</environment.package>
-                <maven.app-name>${name}</maven.app-name>
+                <maven.app-name>${project.name}</maven.app-name>
                 <maven.log-home />
                 <maven.log-level>INFO</maven.log-level>
                 <maven.sql-log-level>INFO</maven.sql-log-level>
@@ -156,7 +156,7 @@
             <id>prd</id>
             <properties>
                 <environment.package>prd</environment.package>
-                <maven.app-name>${name}</maven.app-name>
+                <maven.app-name>${project.name}</maven.app-name>
                 <maven.log-home>./log</maven.log-home>
                 <maven.log-level>INFO</maven.log-level>
                 <maven.sql-log-level>INFO</maven.sql-log-level>
