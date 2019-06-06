@@ -1,5 +1,6 @@
 package com.axis.onion;
 
+import cc.kebei.utils.StringUtils;
 import com.axis.onion.handler.HelloHandler;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
@@ -34,8 +35,6 @@ public class Launcher {
 
         } catch (Exception e) {
             e.printStackTrace();
-
-        } finally {
             server.destroy();
             System.exit(-1);
         }
@@ -59,7 +58,7 @@ public class Launcher {
         jerseyServlet.setInitOrder(1);
 
         // Tells the Jersey Servlet which REST service/class to load.
-        jerseyServlet.setInitParameter("com.sun.jersey.config.property.resourceConfigClass","com.sun.jersey.api.core.PackagesResourceConfig");
+        jerseyServlet.setInitParameter("com.sun.jersey.config.property.resourceConfigClass", "com.sun.jersey.api.core.PackagesResourceConfig");
         // pojo mapper json
         jerseyServlet.setInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
         // jersey resources package
@@ -74,18 +73,24 @@ public class Launcher {
 
         } catch (Exception e) {
             e.printStackTrace();
-
-        } finally {
             server.destroy();
             System.exit(-1);
         }
-
-
     }
 
     public static void main(String[] args) {
         // 默认8090端口
-        new Launcher().startWithServletContext(8090, "/");
+        int port = 8090;
+
+        if (args.length > 0) {
+            // 第一个参数必须是端口号
+            int specialPort = Integer.parseInt(args[0]);
+            if (StringUtils.isNumber(specialPort)) {
+                port = specialPort;
+            }
+        }
+
+        new Launcher().startWithServletContext(port, "/");
 
     }
 }
