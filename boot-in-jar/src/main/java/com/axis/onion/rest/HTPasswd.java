@@ -20,7 +20,6 @@ import java.util.Map;
  * Created by qingyuan on 2018/10/22.
  */
 @Path("/htpasswd")
-//@IPFilterConfigure({"localhost"})
 public class HTPasswd {
 
     @Autowired
@@ -36,6 +35,7 @@ public class HTPasswd {
     @GET
     @Path("/update-prd")
     @Produces(MediaType.APPLICATION_JSON)
+    @IPFilterConfigure()
     public Response updateForPrd(@QueryParam("name") String name, @QueryParam("token") String password) {
         return update(name, password, "prd");
     }

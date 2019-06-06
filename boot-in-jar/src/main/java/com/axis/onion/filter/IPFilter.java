@@ -1,9 +1,12 @@
 package com.axis.onion.filter;
 
+import cc.kebei.utils.StringUtils;
+import com.axis.onion.config.AppConfig;
 import com.axis.onion.exception.BusinessException;
 import com.axis.onion.filter.annotation.IPFilterConfigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -29,17 +32,25 @@ public class IPFilter implements ContainerRequestFilter {
     @Context
     ResourceInfo resourceInfo;
 
+    @Autowired
+    AppConfig appConfig;
+
     @Override
     public void filter(ContainerRequestContext containerRequestContext) {
         LOG.info("In the IP interceptor");
         // 拿到客户端IP
         String clientIp = this.getIPAddress(httpServletRequest);
+        // 获取IP白名单
+        String ipWhiteList = appConfig.getIpWhiteList();
         LOG.info("client ip is {}", clientIp);
         Class<?> clazz = resourceInfo.getResourceClass();
         IPFilterConfigure annotationClass = clazz.getAnnotation(IPFilterConfigure.class);
         if (annotationClass != null) {
             LOG.info("ClassAnnotation={}", annotationClass);
-            String[] ips = annotationClass.value();
+            if (StringUtils.isNullOrEmpty(ipWhiteList)) {
+                ipWhiteList = annotationClass.whiteList();
+            }
+            String[] ips = ipWhiteList.split(",");
             for (String ip : ips) {
                 if (clientIp.startsWith(ip)) {
                     return;
@@ -50,14 +61,17 @@ public class IPFilter implements ContainerRequestFilter {
         IPFilterConfigure annotationMethod = method.getAnnotation(IPFilterConfigure.class);
         if (annotationMethod != null) {
             LOG.info("MethodAnnotation={}", annotationMethod);
-            String[] ips = annotationMethod.value();
+            if (StringUtils.isNullOrEmpty(ipWhiteList)) {
+                ipWhiteList = annotationMethod.whiteList();
+            }
+            String[] ips = ipWhiteList.split(",");
             for (String ip : ips) {
                 if (clientIp.startsWith(ip)) {
                     return;
                 }
             }
         }
-        throw new BusinessException(Response.Status.NOT_ACCEPTABLE, "0001",clientIp);
+        throw new BusinessException(Response.Status.NOT_ACCEPTABLE, "0001", clientIp);
     }
 
     private String getIPAddress(HttpServletRequest request) {

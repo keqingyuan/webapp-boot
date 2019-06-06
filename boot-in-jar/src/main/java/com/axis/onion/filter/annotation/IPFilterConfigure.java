@@ -13,5 +13,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IPFilterConfigure {
-    String[] value() default {"127.0.0.0", "localhost", "0.0.0.0", "0:0:0:0:0:0:0:1"};
+    // 白名单
+    String whiteList() default "127.0.0.1,localhost,0:0:0:0:0:0:0:1";
 }

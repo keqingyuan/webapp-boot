@@ -1,8 +1,10 @@
 package com.axis.onion.service;
 
 import cc.kebei.expands.shell.Shell;
+import com.axis.onion.config.AppConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 
@@ -16,9 +18,7 @@ public class HTPasswdService {
 
     private static final Logger LOG = LoggerFactory.getLogger(HTPasswdService.class);
 
-    private final String UPDATE_COMMAND_TEST = "/usr/bin/htpasswd2 -mb /home/svnuser/svn_apache_common_conf/passwd_test.conf";
-
-    private final String UPDATE_COMMAND = "/usr/bin/htpasswd2 -mb /apache/svn_common_conf_116/passwd.comf";
+    @Autowired private AppConfig appConfig;
 
     public String updatePassword(String name, String passwd, String env) {
         LOG.info("name={},password={}", name, passwd);
@@ -26,9 +26,9 @@ public class HTPasswdService {
         try {
             synchronized (this) {
                 String pwd = new String(Base64Utils.decodeFromString(passwd), "UTF-8");
-                String command = UPDATE_COMMAND_TEST;
+                String command = appConfig.getHtpasswd2UpdateCommandForTest();
                 if ("prd".equals(env))
-                    command = UPDATE_COMMAND;
+                    command = appConfig.getHtpasswd2UpdateCommand();
                 command = command + " " + name + " " + pwd;
                 Shell.build(command)
                         .onProcess((line, helper) -> LOG.info(line))
