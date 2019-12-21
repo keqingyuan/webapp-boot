@@ -1,6 +1,7 @@
 package com.axis.onion.rest;
 
 import cc.kebei.utils.StringUtils;
+import com.axis.onion.exception.BusinessException;
 import com.axis.onion.filter.annotation.IPFilterConfigure;
 import com.axis.onion.service.HTPasswdService;
 import org.slf4j.Logger;
@@ -42,6 +43,7 @@ public class HTPasswd {
 
     /**
      * 更新
+     *
      * @param name
      * @param password
      * @param env
@@ -51,7 +53,7 @@ public class HTPasswd {
         String ret = htPasswdService.updatePassword(name, password, env);
         Map<String, Object> result = new HashMap<>();
         if (!StringUtils.isNullOrEmpty(ret)) {
-            return Response.serverError().build();
+            throw new BusinessException(Response.Status.INTERNAL_SERVER_ERROR,"0000",ret);
         }
         result.put("msg", "success");
         return Response.ok(result).build();

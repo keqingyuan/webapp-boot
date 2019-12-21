@@ -1,5 +1,6 @@
 package com.axis.onion.service;
 
+import cc.kebei.expands.shell.Result;
 import cc.kebei.expands.shell.Shell;
 import com.axis.onion.config.AppConfig;
 import org.slf4j.Logger;
@@ -18,7 +19,8 @@ public class HTPasswdService {
 
     private static final Logger LOG = LoggerFactory.getLogger(HTPasswdService.class);
 
-    @Autowired private AppConfig appConfig;
+    @Autowired
+    private AppConfig appConfig;
 
     public String updatePassword(String name, String passwd, String env) {
         LOG.info("name={},password={}", name, passwd);
@@ -30,15 +32,17 @@ public class HTPasswdService {
                 if ("prd".equals(env))
                     command = appConfig.getHtpasswd2UpdateCommand();
                 command = command + " " + name + " " + pwd;
-                Shell.build(command)
-                        .onProcess((line, helper) -> LOG.info(line))
-                        .onError((line, helper) -> LOG.error(line))
-                        .exec();
+                Result ret = Shell.build(command)
+                        .onProcess(((line, helper) -> LOG.info(line)))
+                        .onError((line, helper) -> LOG.error(line)).exec();
+                if (ret.getCode() != 0) {
+                    result = "命令执行失败，详情请查看日志";
+                }
             }
 
         } catch (IOException e) {
             result = e.getLocalizedMessage();
-            LOG.error(e.getLocalizedMessage(), e);
+            LOG.error(e.getLocalizedMessage());
         }
         return result;
     }
