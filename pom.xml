@@ -107,9 +107,9 @@
             </dependency>
             <!-- json相关 -->
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>1.2.58</version>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.10.1</version>
             </dependency>
             <!-- jetty dependencies-->
             <dependency>
