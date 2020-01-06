@@ -15,7 +15,7 @@ public class i18nBundle {
         //取得系统默认的国家／语言环境
         Locale locale = Locale.getDefault(Locale.Category.FORMAT);
         //根据指定的国家／语言环境加载资源文件
-        bundle = ResourceBundle.getBundle("message-source", locale);
+        bundle = ResourceBundle.getBundle("messages/message-source", locale);
     }
 
     /**

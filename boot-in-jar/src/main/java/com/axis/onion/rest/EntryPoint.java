@@ -19,6 +19,6 @@ public class EntryPoint {
     @Path("/test")
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, Object> test() {
-        throw new BusinessException("0000","Qingyuan");
+        throw new BusinessException("first.exception","Qingyuan");
     }
 }
