@@ -4,7 +4,7 @@
 
     <groupId>cc.kebei</groupId>
     <artifactId>webapp-boot</artifactId>
-    <version>1.4</version>
+    <version>1.5-SNAPSHOT</version>
     <modules>
         <module>boot-in-jar</module>
         <module>boot-in-war</module>
@@ -38,7 +38,7 @@
         <url>https://github.com/keqingyuan/webapp-boot</url>
         <connection>scm:git:https://github.com/keqingyuan/webapp-boot.git</connection>
         <developerConnection>scm:git:https://github.com/keqingyuan/webapp-boot.git</developerConnection>
-        <tag>webapp-boot-1.4</tag>
+        <tag>HEAD</tag>
   </scm>
 
     <properties>
