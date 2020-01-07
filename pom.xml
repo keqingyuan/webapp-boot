@@ -4,7 +4,7 @@
 
     <groupId>cc.kebei</groupId>
     <artifactId>webapp-boot</artifactId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.4-SNAPSHOT</version>
     <modules>
         <module>boot-in-jar</module>
         <module>boot-in-war</module>
